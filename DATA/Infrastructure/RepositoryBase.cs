@@ -32,18 +32,9 @@ namespace Data.Infrastructure
         }
         public virtual void Update(T entity)
         {
-
             dbset.Attach(entity);
             dataContext.Entry(entity).State = EntityState.Modified;
-
-
-           
-        
         }
-
-
-
-
         public virtual void Delete(T entity)
         {
             dbset.Remove(entity);
@@ -89,6 +80,11 @@ namespace Data.Infrastructure
             //First : first occurance or Exception
             //FirstOrDefault : first else default value (null) 
             //SingleOrDefault : single if exists else default value (null) : unique resultat
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

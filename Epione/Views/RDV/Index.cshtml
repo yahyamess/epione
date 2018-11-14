@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Models.RDVModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+    <title>@Page.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>INSPINIA - Landing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href=@Url.Content("/Content/css/bootstrap.min.css") rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href=@Url.Content("/Content/css/animate.css") rel="stylesheet">
+    <link href=@Url.Content("/Content/font-awesome/css/font-awesome.min.css") rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href=@Url.Content("/Content/css/style.css") rel="stylesheet">
+</head>
+<body id="page-top" class="landing-page">
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">Epione</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="#page-top">Acceuil</a></li>
+                        <li><a class="page-scroll" href="#features">Espace Medecin</a></li>
+                        <li><a class="page-scroll" href="#team">Espace Patient</a></li>
+                        <li><a class="page-scroll" href="#testimonials">Analyse</a></li>
+                        <li><a class="page-scroll" href="#pricing">Parcours</a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ville)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.maladi)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ville)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maladi)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>

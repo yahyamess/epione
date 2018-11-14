@@ -1,20 +1,17 @@
 ﻿using DATA;
-using Domain;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Models;
 using Services;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq.Dynamic;
+using Domain;
 
 namespace Epione.Controllers
 {
-    [Authorize(Roles = "Medecin")]
+   // [Authorize(Roles ="Medecin")]
     public class MedecinController : Controller
     {
 
@@ -26,34 +23,7 @@ namespace Epione.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            var PL = MS.GetById(Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId())); 
-
-            //List<PlusMedModel> plus = new List<PlusMedModel>();
-            //foreach (var item in PL)
-            //{
-            //    if (item.IDMed == Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId()))
-            //    {
-
-            //        plus.Add(
-            //            new PlusMedModel
-            //            {
-            //                specialieProfondu = item.specialieProfondu,
-
-            //                IDMed = item.IDMed,
-            //                Hopital = item.Hopital,
-            //                image = item.image
-
-            //            });
-
-            //    }
-            //}
-
-            ViewBag.plus =PL ; //objemp is employee class object  
-                                 //OR You can use ViewBag OR ViewData.ViewData is more efficiant way as compare to ViewBag  
-            ViewData["plus"] = PL; //objemp is employee class object  
-            return View("index");
-          
-
+            return View();
         }
 
         // GET: Default/Details/5
@@ -70,24 +40,20 @@ namespace Epione.Controllers
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult CreatePlus(PlusMedModel M ,  FormCollection collection)
+        public ActionResult CreatePlus(PlusMed PlusModel ,  FormCollection collection)
         {
 
 
 
-        
 
-            PlusMed f = new Domain.PlusMed();
 
-            //f.specialieProfondu = M.specialieProfondu;
-            //f.IDMed = Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            //f.Hopital = M.Hopital;
-            //f.image = M.image;
+            global::Models.PlusMed f = new global::Models.PlusMed();
 
-            f.specialieProfondu = "hahahah";
-            f.IDMed = 55; 
-            f.Hopital = M.Hopital;
-            f.image = M.image;
+            f.specialieProfondu = PlusModel.specialieProfondu;
+            
+            f.IDMed = PlusModel.IDMed;
+            f.Hopital = PlusModel.Hopital; 
+
             MS.Add(f);
             MS.Commit();
             return RedirectToAction("index");
@@ -114,39 +80,22 @@ namespace Epione.Controllers
         // POST: Default/Edit/5
     
         [HttpPost]
-        public ActionResult Edit( FormCollection form)
+        public ActionResult Edit(PlusMed PlusModel, int id , FormCollection collection)
         {
 
-            try { 
 
-            string hopital = form["hopital"];
-            string profondu = form["profondu"];
-            string image1 = form["image"];
-            MyContext ctx = new MyContext();
-                var id = Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            var plus = ctx.PlusMed.First(a => a.IDMed==id );
-            
-            plus.Hopital = hopital;
-            plus.specialieProfondu = profondu;
-            plus.image = image1;
-            
-           ctx.Entry(plus).State = EntityState.Modified;
-            ctx.SaveChanges();
 
-                 ViewBag.plus = plus; //objemp is employee class object  
-                //OR You can use ViewBag OR ViewData.ViewData is more efficiant way as compare to ViewBag  
-                ViewData["plus"] = plus; //objemp is employee class object  
 
-               
+            global::Models.PlusMed f = new global::Models.PlusMed();
 
-                return View("Index"); 
-            }
+            f.specialieProfondu = PlusModel.specialieProfondu;
+            f.ID = id; 
+            f.IDMed = PlusModel.IDMed;
+            f.Hopital = PlusModel.Hopital;
 
-            catch (DataException/* dex */)
-            {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
-                return RedirectToAction("index");
-            }
+            MS.add(f);
+            MS.Commit();
+            return RedirectToAction("index");
 
 
 
@@ -158,15 +107,16 @@ namespace Epione.Controllers
 
 
 
+            //try
+            //{
+            //    // TODO: Add update logic here
 
-
-
-
-
-
-
-
-
+            //    return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         // GET: Default/Delete/5
@@ -179,15 +129,16 @@ namespace Epione.Controllers
 
         // POST: Default/Delete/5
         [HttpPost]
-        public ActionResult Delete( int id, PlusMed f)
+        public ActionResult Delete(PlusMed PlusModel, int id, FormCollection collection)
         {
-           
-             f = MS.GetById(id);
-        
+
+            global::Models.PlusMed f = new global::Models.PlusMed();
+
+            f.specialieProfondu = PlusModel.specialieProfondu;
+            f.ID = id;
             MS.Delete(f);
             MS.Commit();
-         
-                return RedirectToAction("index");
+            return RedirectToAction("index");
 
 
             //try
@@ -199,10 +150,99 @@ namespace Epione.Controllers
             //catch
             //{
             //    return View();
-            //}
+           }
+         public ActionResult Index1(string firstname, string lastname, string specialite, string localisation)
+        {
+            int page = 1;
+            string sortdir = "asc";
+            string sort = "FirstName";
+            int pageSize = 10;
+            int totalRecord = 0;
+            if (page < 1) page = 1;
+            int skip = (page * pageSize) - pageSize;
+            // Parameter
+            //ViewBag.last, ViewBag.first, ViewBag.spec, ViewBag.localisation, sort, sortdir, skip, pageSize
+            var data = GetMedecin(firstname, lastname , specialite, localisation);
+            ViewBag.TotalRows = totalRecord;
+            //ViewBag.search = search;
+            return View(data);
         }
 
+        public ActionResult GetMedecins()
+        {
+            List<Medecin> list = new List<Medecin>();
+           // list = this.GetMedecin();
+            return View(list);
 
+        }
+
+        //string firstname, string lastname, string localisation, string specialite, string sort, string sortdir, int skip, int pageSize
+        public List<Medecin> GetMedecin(string firstname, string lastname, string specialite, string localisation)
+        {
+
+            //using (MyContext dc = new MyContext())
+            //{
+            //    var v = (from a in dc.Medecin
+            //             where
+            //                     a.FirstName.Contains(firstname) ||
+            //                     a.LastName.Contains(lastname) ||
+            //                     a.localisation.Contains(localisation) ||
+            //                     a.specialite.Contains(specialite)
+            //             //  a.specialite.Contains(search)
+            //             select a
+            //                    );
+            // totalRecord = v.Count();
+            // v = v.OrderBy(sort + " " + sortdir);
+            //    if (pageSize > 0)
+            //    {
+            //        v = v.Skip(skip).Take(pageSize);
+            //    }
+
+            //    var x = v.ToList();
+            //   return v.ToList();
+
+            MyContext dc = new MyContext();
+            List<Medecin> myList = new List<Medecin>();
+            myList = firstname == "" && lastname != "" && localisation != "" && specialite != "" ? dc.Medecin
+                .Where(item => item.LastName == lastname && item.specialite == specialite && item.localisation == localisation).ToList() :
+
+                lastname == "" && firstname != "" && localisation != "" && specialite != "" ? dc.Medecin
+                .Where(item => item.FirstName == firstname && item.specialite == specialite && item.localisation == localisation).ToList() :
+
+                specialite == "" && firstname != "" && localisation != "" && lastname != "" ? dc.Medecin
+                .Where(item => item.LastName == lastname && item.FirstName == firstname && item.localisation == localisation).ToList() :
+
+                localisation == "" && firstname != "" && lastname != "" && specialite != "" ? dc.Medecin
+                .Where(item => item.LastName == lastname && item.specialite == specialite && item.FirstName == firstname).ToList() :
+
+                 firstname == "" && lastname == ""  && localisation != "" && specialite != "" ?
+            dc.Medecin
+                .Where(item => item.specialite == specialite && item.localisation == localisation).ToList() :
+            localisation == "" && specialite == "" && firstname != "" && lastname != "" ? dc.Medecin
+                .Where(item => item.FirstName == firstname && item.LastName == lastname).ToList() :
+                localisation == "" && lastname == "" && specialite != "" && firstname != "" ?
+            dc.Medecin
+                .Where(item => item.specialite == specialite && item.FirstName == firstname).ToList() :
+                firstname == "" && localisation == "" && lastname != "" && specialite != "" ?
+            dc.Medecin
+                .Where(item => item.specialite == specialite && item.LastName == lastname).ToList() :
+                firstname == "" && specialite == "" && localisation != "" && lastname != "" ?
+            dc.Medecin
+                .Where(item => item.localisation == localisation && item.LastName == lastname).ToList() :
+                specialite == "" && lastname == "" && localisation != "" && firstname != "" ?
+            dc.Medecin
+                .Where(item => item.FirstName == firstname && item.localisation == localisation).ToList() :
+
+                dc.Medecin
+                .Where(item => item.FirstName == firstname && item.localisation == localisation && item.LastName == lastname && item.specialite == specialite).ToList();
+
+            //myList = dc.Medecin.Where(item => item.FirstName ==firstname)
+            //    .ToList();
+
+            return myList;
+            }
+        }
 
     }
-}
+
+

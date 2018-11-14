@@ -69,8 +69,8 @@ namespace Epione
 
                 };
 
-                var Password = "Administration123555554$";
-                var chkUser = UserManager.Create(user, Password);
+                
+                var chkUser = UserManager.Create(user);
                 if (chkUser.Succeeded)
                 {
                     var result1 = UserManager.AddToRole(user.Id, "SuperAdmin")

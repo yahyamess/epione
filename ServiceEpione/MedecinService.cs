@@ -1,5 +1,5 @@
 ﻿using Data.Infrastructure;
-using Domain;
+using Models;
 using ServicePattern;
 
 namespace Services

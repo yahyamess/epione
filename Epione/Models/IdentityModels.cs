@@ -33,5 +33,7 @@ namespace Epione.Models
         {
             return new ApplicationDbContext();
         }
+
+       // public System.Data.Entity.DbSet<Models.RDVModels> RDVModels { get; set; }
     }
 }

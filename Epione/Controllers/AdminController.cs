@@ -10,18 +10,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Domain;
-using Services;
 
 namespace Epione.Controllers
 {
 
-    
     [Authorize(Roles ="SuperAdmin")]
     public class AdminController : Controller
     {
-
-
-     
 
         MyContext context = new MyContext();
         // GET: Admin
@@ -42,40 +37,30 @@ namespace Epione.Controllers
 
  
           
-            var UserManager = new UserManager<Domain.Medecin, int>(new UserStore<Domain.Medecin, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>(context));
+            var UserManager = new UserManager<Medecin, int>(new UserStore<Medecin, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>(context));
 
             string UserName = form["txtEmail"];
             string email = form["txtEmail"];
             string pwd = form["txtPassword"];
-            
-            var user = new Domain.Medecin();
+            var user = new Medecin();
             user.UserName = UserName;
+
             user.Email = email;
             user.Password = pwd;
-           
 
-            var chkUser = UserManager.Create(user , pwd);
+            string pass = pwd; 
+            var chkUser = UserManager.Create(user , pass);
             if (chkUser.Succeeded)
             {
                 var result1 = UserManager.AddToRole(user.Id, "medecin")
                 ;
             }
-
-            MyContext ctx = new MyContext();
-            ctx.PlusMed.Add(new PlusMed { IDMed = user.Id , specialieProfondu= "ajouter specialité" , Hopital = "ajouter specialité" , image="ajouter image"}) ;
-            
-            ctx.SaveChanges();
-
-
-
             return View();
 
 
             ///////////////////////////////////////////////////
 
 
-
-        
 
 
 

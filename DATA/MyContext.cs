@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Domain;
 
@@ -47,9 +47,11 @@ namespace DATA
         public DbSet<Rating> Raiting { get; set; }
 
         public DbSet<Programme> Programme { get; set; }
-        public DbSet<RDV> RendezVous { get; set; }
-        
+        public DbSet<RDV> RDVs { get; set; }
+    
         public DbSet<PlusMed> PlusMed { get; set; }
+        public DbSet<Medecin> Medecin { get; set; }
 
+      
     }
 }
