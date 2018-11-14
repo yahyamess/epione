@@ -44,6 +44,9 @@ namespace Epione.Controllers
           
             var UserManager = new UserManager<Domain.Medecin, int>(new UserStore<Domain.Medecin, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>(context));
 
+
+
+
             string UserName = form["txtEmail"];
             string email = form["txtEmail"];
             string pwd = form["txtPassword"];
@@ -52,7 +55,10 @@ namespace Epione.Controllers
             user.UserName = UserName;
             user.Email = email;
             user.Password = pwd;
-           
+            MyContext ctx = new MyContext();
+            ctx.PlusMed.Add(new PlusMed { IDMed = user.Id, specialieProfondu = "ajouter specialité", Hopital = "Hopital", image = "avatar.png" });
+
+            ctx.SaveChanges();
 
             var chkUser = UserManager.Create(user , pwd);
             if (chkUser.Succeeded)
@@ -61,10 +67,7 @@ namespace Epione.Controllers
                 ;
             }
 
-            MyContext ctx = new MyContext();
-            ctx.PlusMed.Add(new PlusMed { IDMed = user.Id , specialieProfondu= "ajouter specialité" , Hopital = "ajouter specialité" , image="ajouter image"}) ;
-            
-            ctx.SaveChanges();
+
 
 
 

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Domain.Medecin>
+@{
+    Layout = null;
+    var grid = new WebGrid(canPage: true, rowsPerPage: 10);
+    grid.Bind(source: Model, rowCount: ViewBag.TotalRows, autoSortAndPage: false);
+}
+
+<!DOCTYPE html>
+
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h2> Liste des Medecins</h2>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                </div>
+                <div class="collapse navbar-collapse">
+
+
+
+                    @using (Html.BeginForm("index1", "Medecin", FormMethod.Get, new { @class = "navbar-form navbar-left" }))
+                    {
+                        <div class="form-group">
+                            <input type="text" name="firstname" class="form-control" placeholder="First name" />
+                            <input type="text" name="lastname" class="form-control" placeholder="Last name" />
+                            <input class="form-control" type="text" name="specialite" placeholder="Specialite" />.
+
+                            <input type="text" name="localisation" class="form-control" placeholder="Ou ? (Region ou Ville)" />
+                        </div>
+                        <button type="submit" value="Search" class="btn btn-success">Search</button>
+                    }
+
+
+
+                </div>
+            </div>
+        </nav>
+        @*<div>
+                @grid.Table(
+                    tableStyle: "table table-responsive table-bordered",
+                    columns: grid.Columns(
+                        grid.Column(columnName: "FirstName", header: "First Name"),
+                        grid.Column(columnName: "LastName", header: "Last Name"),
+                        grid.Column(columnName: "localisation", header: "localisation"),
+                        grid.Column(columnName: "specialite", header: "specialite")
+
+                    )
+                )
+
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        @grid.PagerList(mode: WebGridPagerModes.All, paginationStyle: "pagination pagination-small pagination-right")
+                    </div>
+                </div>
+
+                @Html.Hidden("dir", grid.SortDirection)
+                @Html.Hidden("col", grid.SortColumn)
+
+            </div>*@
+        <div>
+            @{
+
+                if (Model.Count() == 0)
+                {
+                    <h1>Veuiller saisir vos critère de recherche</h1>
+                }
+                else
+                {<table class="table table-hover">
+                <tr>
+                    <th class="bg-primary text-white">FirstName</th>
+                    <th class="bg-primary text-white">LastName</th>
+                    <th class="bg-primary text-white">localisation</th>
+                    <th class="bg-primary text-white">specialite</th>
+                    <th class="bg-primary text-white"></th>
+                    <th class="bg-primary text-white"></th>
+                    <th class="bg-primary text-white"></th>
+                </tr>
+                @foreach (var i in Model.ToList())
+                {
+                    <tr>
+                        <td style="display: none ; ">@i.Id</td>
+
+                        <td>@i.FirstName</td>
+                        <td>@i.LastName</td>
+                        <td>@i.localisation</td>
+                        <td>@i.specialite</td>
+                        <td>
+                            <div class="btn-group btn-group-lg">
+                                <a href="@Url.Action("Create","RDV" , new { id1= @i.Id })" type="button" class="btn btn-primary">Prendre un RDV</a>
+                                <button type="button" class="btn btn-primary">Appeller</button>
+                                <a href="@Url.Action("Mail","RDV")" type="button" class="btn btn-primary">E-mail</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+                }
+
+
+            }
+
+
+
+
+        </div>
+
+
+    </div>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            try {
+                var dir = $('#dir').val();
+                var col = $('#col').val();
+                var header = $("th a[href*=" + col + "]");
+                if (dir == "Ascending") {
+                    header.text(header.text() + "  ▲")
+                }
+                if (dir == "Descending") {
+                    header.text(header.text() + "  ▼");
+                }
+
+            } catch (e) {
+
+            }
+        })
+    </script>
+</body>
+</html>

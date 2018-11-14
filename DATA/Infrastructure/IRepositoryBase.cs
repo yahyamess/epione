@@ -12,8 +12,6 @@ namespace Data.Infrastructure
         void Add(T entity);
         void Delete(Expression<Func<T, bool>> where);
         void Delete(T entity);
-
-
         T Get(Expression<Func<T, bool>> where);
 
         T GetById(long id);

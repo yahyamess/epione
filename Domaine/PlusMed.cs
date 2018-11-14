@@ -9,12 +9,12 @@ namespace Domain
 {
    public  class PlusMed
     {
-
         [Key]
-        public  int  IDMed { get; set; }
+        public int IDMed { get; set; }
         public String specialieProfondu { get; set; }
         public String Hopital { get; set; }
-        public string image { get; set;  }
+        public string image { get; set; }
+
 
 
 

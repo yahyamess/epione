@@ -7,7 +7,6 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using Epione.Models;
 using DATA;
-using Models;
 using Domain;
 
 namespace Epione

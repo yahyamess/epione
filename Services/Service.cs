@@ -1,5 +1,4 @@
 ﻿
-
 using Data.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -51,7 +50,7 @@ namespace ServicePattern
             utwk.getRepository<TEntity>().Delete(where);
         }
 
-        public virtual TEntity GetById(int id)
+        public virtual TEntity GetById(long id)
         {
             //  return _repository.GetById(id);
             return utwk.getRepository<TEntity>().GetById(id);

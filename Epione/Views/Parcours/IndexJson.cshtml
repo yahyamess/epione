@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Domaine.Parcours>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexJson</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomMedecin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Specialite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maladie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Justification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idPatient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idMedecin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idRDV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etatrdv)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomMedecin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maladie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Justification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idPatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idMedecin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idRDV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etatrdv)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

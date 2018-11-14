@@ -9,10 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Epione.Models;
-using Models;
+using Domain;
 using DATA;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Domain;
 
 namespace Epione.Controllers
 {
@@ -172,7 +171,7 @@ namespace Epione.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, Password = model.Password };
+                var user = new Patient { UserName = model.Email, Email = model.Email, Password = model.Password };
                 var result = await Manager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

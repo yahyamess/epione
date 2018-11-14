@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.PlusMedModel>
+﻿
 
 
 <!DOCTYPE html>
@@ -41,8 +41,18 @@
                         <li class="nav-header">
                             <div class="dropdown profile-element">
                                 <span>
+
+                                    @{
+
+
+                                        var emp = (Domain.PlusMed)ViewData["plus"];//retrive Data from ViewData or ViewBag
+                                    }
+
+
+
+
                                     <a href="#" data-toggle="popover" >
-                                        <img alt="image" class="img-circle" src=@Url.Content("/Content/img/profile_small.jpg") />
+                                        <img alt="image" class="img-circle" src=@Url.Content("/Image/"+@emp.image) width="50px"/>
 
                                     </a>
                                     
@@ -52,12 +62,6 @@
                                 <div id="customdiv" style="display :none" >
                                     <table class="table">
                                        
-
-                                        @{
-
-
-                                            var emp = (Domain.PlusMed)ViewData["plus"];//retrive Data from ViewData or ViewBag
-                                        }
 
 
 
@@ -95,7 +99,7 @@
                                     </table>
                                     <div style=" display: none;" id="panel" >
 
-                                        @using (Html.BeginForm("Edit", "Medecin", FormMethod.Post))
+                                        @using (Html.BeginForm("Edit", "Medecin", FormMethod.Post , new { enctype = "multipart/form-data" }))
                                         {
 
                                             <tr>
@@ -113,7 +117,9 @@
 
                                                     <tr>
                                                         <td>
-                                                            <input type="text" name="image" placeholder="image" />
+
+                                                            @Html.TextBox("image", null, new { type = "file" })
+
                                                         </td>
                                                     </tr>
 
@@ -136,8 +142,8 @@
             $("#panel1").slideDown(1500);
             $("#panel2").slideDown(1500);
             $("#panel").slideDown(1500);
-        });
-    });
+                                            });
+                                        });
 
 
 </script>
@@ -991,7 +997,7 @@ $(document).ready(function(){
         </script>
 
 
-
+        @RenderSection("scripts", required: false)
 
     </body>
 </html>

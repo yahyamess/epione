@@ -65,9 +65,13 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201811121203565_v5.cs" />
-    <Compile Include="Migrations\201811121203565_v5.Designer.cs">
-      <DependentUpon>201811121203565_v5.cs</DependentUpon>
+    <Compile Include="Migrations\201811141707029_vgh.cs" />
+    <Compile Include="Migrations\201811141707029_vgh.Designer.cs">
+      <DependentUpon>201811141707029_vgh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811141719564_vghf.cs" />
+    <Compile Include="Migrations\201811141719564_vghf.Designer.cs">
+      <DependentUpon>201811141719564_vghf.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyContext.cs" />
@@ -84,8 +88,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811121203565_v5.resx">
-      <DependentUpon>201811121203565_v5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811141707029_vgh.resx">
+      <DependentUpon>201811141707029_vgh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811141719564_vghf.resx">
+      <DependentUpon>201811141719564_vghf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
