@@ -1,13 +1,7 @@
-﻿using DATA;
-using Domain;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Models;
+﻿using Domain;
 using Services;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,34 +20,7 @@ namespace Epione.Controllers
         // GET: Default
         public ActionResult Index()
         {
-            var PL = MS.GetById(Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId())); 
-
-            //List<PlusMedModel> plus = new List<PlusMedModel>();
-            //foreach (var item in PL)
-            //{
-            //    if (item.IDMed == Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId()))
-            //    {
-
-            //        plus.Add(
-            //            new PlusMedModel
-            //            {
-            //                specialieProfondu = item.specialieProfondu,
-
-            //                IDMed = item.IDMed,
-            //                Hopital = item.Hopital,
-            //                image = item.image
-
-            //            });
-
-            //    }
-            //}
-
-            ViewBag.plus =PL ; //objemp is employee class object  
-                                 //OR You can use ViewBag OR ViewData.ViewData is more efficiant way as compare to ViewBag  
-            ViewData["plus"] = PL; //objemp is employee class object  
-            return View("index");
-          
-
+            return View();
         }
 
         // GET: Default/Details/5
@@ -70,27 +37,33 @@ namespace Epione.Controllers
 
         // POST: Default/Create
         [HttpPost]
-        public ActionResult CreatePlus(PlusMedModel M ,  FormCollection collection)
+        public ActionResult CreatePlus(PlusMed PlusModel ,  FormCollection collection)
         {
 
 
 
-        
 
-            PlusMed f = new Domain.PlusMed();
 
-            //f.specialieProfondu = M.specialieProfondu;
-            //f.IDMed = Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            //f.Hopital = M.Hopital;
-            //f.image = M.image;
+            Domain.PlusMed f = new Domain.PlusMed();
 
-            f.specialieProfondu = "hahahah";
-            f.IDMed = 55; 
-            f.Hopital = M.Hopital;
-            f.image = M.image;
+            f.specialieProfondu = PlusModel.specialieProfondu;
+            f.MedID = PlusModel.MedID;
+            f.Hopital = PlusModel.Hopital; 
+
             MS.Add(f);
             MS.Commit();
             return RedirectToAction("index");
+
+
+
+
+
+
+
+
+
+
+
 
 
             //try
@@ -112,97 +85,41 @@ namespace Epione.Controllers
         }
 
         // POST: Default/Edit/5
-    
         [HttpPost]
-        public ActionResult Edit( FormCollection form)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-
-            try { 
-
-            string hopital = form["hopital"];
-            string profondu = form["profondu"];
-            string image1 = form["image"];
-            MyContext ctx = new MyContext();
-                var id = Int32.Parse(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            var plus = ctx.PlusMed.First(a => a.IDMed==id );
-            
-            plus.Hopital = hopital;
-            plus.specialieProfondu = profondu;
-            plus.image = image1;
-            
-           ctx.Entry(plus).State = EntityState.Modified;
-            ctx.SaveChanges();
-
-                 ViewBag.plus = plus; //objemp is employee class object  
-                //OR You can use ViewBag OR ViewData.ViewData is more efficiant way as compare to ViewBag  
-                ViewData["plus"] = plus; //objemp is employee class object  
-
-               
-
-                return View("Index"); 
-            }
-
-            catch (DataException/* dex */)
+            try
             {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
-                return RedirectToAction("index");
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Default/Delete/5
-        public ActionResult Delete( int id)
+        public ActionResult Delete(int id)
         {
-
-          
-            return RedirectToAction("index");
+            return View();
         }
 
         // POST: Default/Delete/5
         [HttpPost]
-        public ActionResult Delete( int id, PlusMed f)
+        public ActionResult Delete(int id, FormCollection collection)
         {
-           
-             f = MS.GetById(id);
-        
-            MS.Delete(f);
-            MS.Commit();
-         
-                return RedirectToAction("index");
+            try
+            {
+                // TODO: Add delete logic here
 
-
-            //try
-            //{
-            //TODO: Add delete logic here
-
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
-
-
-
     }
 }

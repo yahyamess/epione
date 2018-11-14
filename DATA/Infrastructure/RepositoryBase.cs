@@ -32,18 +32,9 @@ namespace Data.Infrastructure
         }
         public virtual void Update(T entity)
         {
-
             dbset.Attach(entity);
             dataContext.Entry(entity).State = EntityState.Modified;
-
-
-           
-        
         }
-
-
-
-
         public virtual void Delete(T entity)
         {
             dbset.Remove(entity);

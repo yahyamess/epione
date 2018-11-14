@@ -9,10 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Epione.Models;
-using Models;
+using Domain;
 using DATA;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Domain;
 
 namespace Epione.Controllers
 {

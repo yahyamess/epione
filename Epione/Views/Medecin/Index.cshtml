@@ -1,10 +1,7 @@
-﻿@model IEnumerable<Domain.PlusMed>
-
-    
+﻿
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 
 
 
@@ -13,58 +10,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-
-
+    <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-          
-            <th>
-                IDMED
-            </th>
-            <th>
-                Specialité
-            </th>
-            <th>
-               Hopitale
-            </th>
-            <th>
-                Image
-            </th>
-            <th></th>
-        </tr>
-    
-        @{
 
 
-            var emp = (Domain.PlusMed)ViewData["plus"];//retrive Data from ViewData or ViewBag
-        }
-
-
-
-
-
-
-        <tr>
-            <td>
-                @emp.IDMed
-            </td>
-            <td>
-                @emp.Hopital
-            </td>
-            <td>
-                @emp.specialieProfondu
-            </td>
-        </tr>
-    }
-    
-    </table>
-
-
-
+    Syrine
+    <div> 
+    </div>
 </body>
 </html>

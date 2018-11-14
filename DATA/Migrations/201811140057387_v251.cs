@@ -1,0 +1,18 @@
+namespace DATA.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class v251 : DbMigration
+    {
+        public override void Up()
+        {
+            AlterColumn("dbo.Parcours", "NomMedecin", c => c.String(nullable: false));
+        }
+        
+        public override void Down()
+        {
+            AlterColumn("dbo.Parcours", "NomMedecin", c => c.String());
+        }
+    }
+}

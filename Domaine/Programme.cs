@@ -12,10 +12,6 @@ namespace Domain
         public int id { get; set; }
         public int idMed { get; set; }
         public int idRdv { get; set; }
-
-        public string ville { get; set; }
-        public string maladi { get; set; }
-       
         public string DateDebutR { get; set; }
         public string DateFinR { get; set; }
     }
